@@ -71,7 +71,8 @@
                 var message = $("#messageTextBox").val();
 
                 $.post("message", {name: name, message: message}, function(data) {
-                   alert(jQuery.parseJSON(data).result);
+                    if(jQuery.parseJSON(data).res == 'ERR')
+                        alert(jQuery.parseJSON(data).msg);
                 });
                 return false;
             }

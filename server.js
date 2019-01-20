@@ -41,14 +41,16 @@ app.post('/messages_list', (req, res) => {
 app.post('/message', (req, res) => {
     let name = req.body.name;
     let message = req.body.message;
-    if(name != undefined) {
-        if(message != undefined && message != "")
+    if(name != undefined && name != "") {
+        if(message != undefined && message != "") {
             addMessage(name, message);
+            res.send(JSON.stringify({res: 'OK'}));
+        }
         else
-            res.send(JSON.stringify({result: 'ERR: No message specified'}));
+            res.send(JSON.stringify({res: 'ERR', msg: 'No message specified'}));
     }
     else
-        res.send(JSON.stringify({result: 'ERR: No name specified'}));
+        res.send(JSON.stringify({res: 'ERR', msg: 'No name specified'}));
 });
 
 addMessage("SERVER", "Initial Message");
