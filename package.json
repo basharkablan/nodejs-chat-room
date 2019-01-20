@@ -4,11 +4,15 @@
   "description": "This is a presentation project for \"Server Client Side\" course.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "Bashar Kablan",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4"
+    "body-parser": "^1.18.3",
+    "date-and-time": "^0.6.3",
+    "express": "^4.16.4",
+    "xss": "^1.0.3"
   }
 }

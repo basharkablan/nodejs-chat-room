@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Heroku Chat
+        </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
+
+        <style>
+            html, body {
+                height: 100%;
+            }
+
+            #wrap {
+                min-height: 100%;
+            }
+
+            #main {
+                overflow:auto;
+                padding-bottom:150px; /* this needs to be bigger than footer height*/
+            }
+
+            .footer {
+                position: relative;
+                margin-top: -190px; /* negative value of footer height */
+                height: 190px;
+                clear:both;
+                padding-top:20px;
+                background-color: gray;
+            }
+
+            #messageTextBox {
+                resize: none;
+                width: 100%;
+            }
+        </style>
+
+    </head>
+    <body>
+        <div id="wrap">
+            <div id="main" class="container">
+                <h2 class="display-4 mx-auto" style="width: 300px;text-align: center;">Heroku Chat</h2>
+                <div>
+                    <div class="card text-white bg-primary mb-3">
+                        <div class="card-body">
+                            <p class="card-text">
+                                <span id="name-1" class="font-weight-bold">Name</span>
+                                <span class="font-weight-bold"> : </span>
+                                <span id="message-1">Some quick example text to build on the card title and make up the bulk of the card's content.</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <form class="form-inline">
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="nameTextBox" placeholder="Enter Name">
+                </div>
+                <div class="col-sm-12">
+                    <textarea type="text" class="form-control" id="messageTextBox" placeholder="Enter Message ..."></textarea>
+                </div>       
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-success">Send !</button>
+                </div>
+            </form>
+        </footer>
+    </body>
+</html>

@@ -1,12 +1,59 @@
-var express = require('express');
-var port = process.env.PORT || 3000;
+let express = require('express');
+let bodyParser = require('body-parser')
+let xss = require('xss');
+let date = require('date-and-time');
 
-var app = express();
+let port = process.env.PORT || 3000;
 
-app.get('/', function (req, res) {
-    res.send(JSON.stringify({ Hello: 'World'}));
+let app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+let messages = {};
+let cnt = 0;
+
+function addMessage(name, message) {
+    messages[++cnt] = {id: cnt, name: xss(name), message: xss(message), time: date.format(now, 'hh:mm')};
+}
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
 });
 
-app.listen(port, function () {
-    console.log('Example app listening on port !');
+app.post('/messagesList', (req, res) => {
+    let last_message_id = req.body.last_id;
+
+    if(last_message_id != undefined) {
+
+        let result = {};
+        index_message_id = last_message_id + 1;
+
+        while(index_message_id <= cnt) {
+            result[index_message_id] = messages[index_message_id];
+            index_message_id++;
+        }
+        res.send(JSON.stringify(result));
+    } else {
+        res.send(JSON.stringify(messages));
+    }
+});
+
+app.post('/message', (req, res) => {
+    let name = req.body.name;
+    let message = req.body.message;
+    if(name != undefined) {
+        if(message != undefined && message != "")
+            addMessage(name, message);
+        else
+            res.send(JSON.stringify({result: 'ERR: No message specified'}));
+    }
+    else
+        res.send(JSON.stringify({result: 'ERR: No name specified'}));
+});
+
+addMessage("SERVER", "Initial Message");
+
+app.listen(port, () => {
+    console.log('Example app listening on port %d!', port);
 });
