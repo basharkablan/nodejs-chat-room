@@ -37,36 +37,69 @@
                 width: 100%;
             }
         </style>
+        <script>
+            var last_id = 0;
+
+            function loadMessages() {
+                $.post("messages_list", {last_id: last_id}, function(result) {
+                    var data = jQuery.parseJSON(result);
+                    $.each(data, function(index, value) {
+                        var obj = data[index];
+                        var message_html =
+                            "<div class=\"card text-white bg-primary mb-3\">" +
+                                "<div class=\"card-body\">" + 
+                                    "<p class=\"card-text\">" +
+                                        "<span id=\"name-" + obj.id + "\" class=\"font-weight-bold\">" + obj.name + "</span>" +
+                                        "<span class=\"font-weight-bold\"> : </span>" +
+                                        "<span id=\"message-" + obj.id + "\">" + obj.message + "</span>" +
+                                    "</p>" +
+                                "</div>" +
+                            "</div>";
+                        $("#messages-container").prepend(message_html);
+
+                        if(last_id < obj.id) {
+                            last_id = obj.id;
+                        }
+                    });
+                });
+            }
+
+            function submit_message() {
+                var name = $("#nameTextBox").val();
+                var message = $("#messageTextBox").val();
+
+                $.post("message", {name: name, message: message}, function(data) {
+                   alert(jQuery.parseJSON(data).result);
+                });
+                return false;
+            }
+
+            $(document).ready(function() {
+                setInterval(loadMessages ,2000);
+                loadMessages();
+            });
+        </script>
 
     </head>
     <body>
         <div id="wrap">
             <div id="main" class="container">
                 <h2 class="display-4 mx-auto" style="width: 300px;text-align: center;">Heroku Chat</h2>
-                <div>
-                    <div class="card text-white bg-primary mb-3">
-                        <div class="card-body">
-                            <p class="card-text">
-                                <span id="name-1" class="font-weight-bold">Name</span>
-                                <span class="font-weight-bold"> : </span>
-                                <span id="message-1">Some quick example text to build on the card title and make up the bulk of the card's content.</span>
-                            </p>
-                        </div>
-                    </div>
+                <div id="messages-container">
                 </div>
             </div>
         </div>
 
         <footer class="footer">
-            <form class="form-inline">
+            <form id="send_message_form" class="form-inline" method="POST" onsubmit="return submit_message();">
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" id="nameTextBox" placeholder="Enter Name">
+                    <input type="text" class="form-control" id="nameTextBox" placeholder="Enter Name" />
                 </div>
                 <div class="col-sm-12">
                     <textarea type="text" class="form-control" id="messageTextBox" placeholder="Enter Message ..."></textarea>
                 </div>       
                 <div class="col-sm-2">
-                    <button type="button" class="btn btn-success">Send !</button>
+                    <button id="send_button" type="submit" class="btn btn-success">Send !</button>
                 </div>
             </form>
         </footer>

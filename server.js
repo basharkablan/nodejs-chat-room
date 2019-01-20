@@ -10,28 +10,27 @@ let app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-let messages = {};
+let messages = [];
 let cnt = 0;
 
 function addMessage(name, message) {
-    messages[++cnt] = {id: cnt, name: xss(name), message: xss(message), time: date.format(now, 'hh:mm')};
+    messages[++cnt] = {id: cnt, name: xss(name), message: message};
 }
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
 
-app.post('/messagesList', (req, res) => {
+app.post('/messages_list', (req, res) => {
     let last_message_id = req.body.last_id;
 
     if(last_message_id != undefined) {
 
         let result = {};
-        index_message_id = last_message_id + 1;
+        index_message_id = last_message_id;
 
-        while(index_message_id <= cnt) {
-            result[index_message_id] = messages[index_message_id];
-            index_message_id++;
+        while(index_message_id < cnt) {
+            result[++index_message_id] = messages[index_message_id];
         }
         res.send(JSON.stringify(result));
     } else {
