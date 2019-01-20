@@ -14,7 +14,7 @@ let messages = [];
 let cnt = 0;
 
 function addMessage(name, message) {
-    messages[++cnt] = {id: cnt, name: xss(name), message: message};
+    messages[++cnt] = {id: cnt, name: xss(name), message: xss(message)};
 }
 
 app.get('/', (req, res) => {
