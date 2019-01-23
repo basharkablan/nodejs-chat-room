@@ -1,7 +1,6 @@
 let express = require('express');
 let bodyParser = require('body-parser')
 let xss = require('xss');
-let date = require('date-and-time');
 
 let port = process.env.PORT || 3000;
 
