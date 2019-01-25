@@ -1,11 +1,11 @@
-# Presentation Chat
+# Web Chat
 
-This application is created for a class presentation.
+This application contains web chat server.
+It is implemented using nodeJS for the server, and HTML with JQuery and Bootstrap for the client side.
 
-It is implemented using nodeJS for the server, and HTML with JQuery and Bootstrp for the client side.
 
-# Run
+## Run
 
 the command for running the server:
 
-npm run start
+`npm run start`
